@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Landing que Vende 24/7 - Tech/AI Design System */
+
+@layer base {
+  :root {
+    /* Tech Dark Theme - Base Colors */
+    --background: 224 20% 8%;
+    --foreground: 0 0% 98%;
+    
+    /* Cards with glassmorphism */
+    --card: 224 20% 12%;
+    --card-foreground: 0 0% 95%;
+    
+    /* Popovers */
+    --popover: 224 20% 10%;
+    --popover-foreground: 0 0% 95%;
+    
+    /* Primary - Neon Green Accent */
+    --primary: 142 84% 55%;
+    --primary-foreground: 224 20% 8%;
+    --primary-glow: 142 84% 65%;
+    
+    /* Secondary - Subtle tech grays */
+    --secondary: 224 15% 20%;
+    --secondary-foreground: 0 0% 90%;
+    
+    /* Muted elements */
+    --muted: 224 15% 18%;
+    --muted-foreground: 0 0% 70%;
+    
+    /* Accent - Bright tech blue */
+    --accent: 200 100% 60%;
+    --accent-foreground: 224 20% 8%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Borders and inputs */
+    --border: 224 15% 25%;
+    --input: 224 15% 20%;
+    --ring: 142 84% 55%;
+    
+    /* Tech gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 84% 55%), hsl(142 84% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(224 20% 8%) 0%, hsl(224 30% 12%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(224 20% 12% / 0.8), hsl(224 15% 18% / 0.6));
+    
+    /* Neon shadows */
+    --shadow-neon: 0 0 20px hsl(142 84% 55% / 0.3);
+    --shadow-card: 0 10px 30px -5px hsl(224 20% 8% / 0.5);
+    --shadow-glow: 0 0 40px hsl(142 84% 65% / 0.4);
+    
+    /* Tech patterns */
+    --grid-size: 32px;
+    --dot-size: 1px;
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    --radius: 0.75rem;
+  }
+  
+  /* Light mode fallback (optional) */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 224 20% 8%;
+    --card: 0 0% 98%;
+    --card-foreground: 224 20% 8%;
+    --primary: 142 84% 45%;
+    --primary-foreground: 0 0% 98%;
+    --border: 224 15% 85%;
+    --input: 224 15% 90%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Tech grid pattern */
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--primary) / 0.1) 1px, transparent 0);
+    background-size: var(--grid-size) var(--grid-size);
+  }
+}
+
+@layer components {
+  /* Neon button variants */
+  .btn-neon {
+    @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground font-semibold px-8 py-4 rounded-lg;
+    @apply shadow-[0_0_20px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.5)];
+    @apply transition-all duration-300 hover:scale-105;
+    background: var(--gradient-primary);
+  }
+  
+  .btn-ghost-neon {
+    @apply border-2 border-primary text-primary bg-transparent px-8 py-4 rounded-lg;
+    @apply hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)];
+    @apply transition-all duration-300;
+  }
+  
+  /* Glassmorphism cards */
+  .glass-card {
+    background: var(--gradient-card);
+    @apply backdrop-blur-md border border-border/50 rounded-xl;
+    @apply shadow-[0_10px_30px_-5px_hsl(var(--background)/0.3)];
+  }
+  
+  /* Neon glow text */
+  .text-neon {
+    @apply text-primary;
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+  
+  /* Tech section backgrounds */
+  .section-tech {
+    @apply relative overflow-hidden;
+    background: linear-gradient(180deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--card)) 50%, 
+      hsl(var(--background)) 100%);
+  }
+  
+  /* Animated counters */
+  .counter {
+    @apply text-neon font-bold text-4xl lg:text-5xl;
+    animation: countUp 2s ease-out;
+  }
+  
+  /* Progress bar */
+  .progress-bar {
+    @apply fixed top-0 left-0 h-1 bg-gradient-to-r from-primary to-primary-glow z-50;
+    @apply transition-all duration-200;
+  }
+  
+  /* CTA Sticky */
+  .cta-sticky {
+    @apply fixed bottom-4 left-4 right-4 z-40;
+    @apply lg:hidden;
+  }
+}
+
+@layer utilities {
+  /* Custom animations */
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Scroll reveal */
+  .scroll-reveal {
+    @apply opacity-0 translate-y-8 transition-all duration-700;
+  }
+  
+  .scroll-reveal.revealed {
+    @apply opacity-100 translate-y-0;
+  }
+}
