@@ -13,6 +13,7 @@ import whatsapp02 from "@/assets/whatsapp-02.png";
 import whatsapp03 from "@/assets/whatsapp-03.png";
 import whatsapp04 from "@/assets/whatsapp-04.png";
 import video from "@/assets/0919.mp4";
+import vslVideo from "@/assets/vsl.mp4";
 
 const Index = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -144,7 +145,7 @@ const Index = () => {
             {/* Left: Copy */}
             <div className="space-y-8">
               <Badge className="bg-primary/20 text-primary border-primary/30">
-                🚀 Nuevo Método 2024
+                🚀 Nuevo Método 2025
               </Badge>
               
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
@@ -171,7 +172,14 @@ const Index = () => {
                   <Download className="w-5 h-5 mr-2" />
                   Obtener eBook Ahora - $9
                 </Button>
-                <Button size="lg" variant="outline" className="btn-ghost-neon text-lg px-8 py-6">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="btn-ghost-neon text-lg px-8 py-6"
+                  onClick={() => {
+                    document.getElementById('demo-video')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   <Play className="w-5 h-5 mr-2" />
                   Ver Demo 60s
                 </Button>
@@ -192,7 +200,7 @@ const Index = () => {
             {/* Right: VSL & Visual */}
             <div className="space-y-6">
               <div className="glass-card p-1 animate-float">
-                <video 
+                <video
                   className="w-full h-full object-cover"
                   controls
                   preload="metadata"
@@ -446,7 +454,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="glass-card p-8">
+            <div id="demo-video" className="glass-card p-8">
               <h3 className="text-xl font-bold mb-4 text-primary">Demo en Vivo (60 segundos)</h3>
               <div className="relative aspect-video bg-card rounded-lg overflow-hidden border border-primary/30">
                 <video 
@@ -454,8 +462,11 @@ const Index = () => {
                   controls
                   preload="metadata"
                   poster="/demo-thumbnail.jpg"
+                  autoPlay
+                  loop
+                  muted
                 >
-                  <source src={video} type="video/mp4" />
+                  <source src={vslVideo} type="video/mp4" />
                   Tu navegador no soporta la reproducción de video.
                 </video>
               </div>
@@ -947,15 +958,9 @@ const Index = () => {
               </p>
               
               <form
-  action="https://formspree.io/f/meolyeno"
+  action="/send.php"
   method="POST"
-  target="_blank"
   className="space-y-4"
-  onSubmit={() => {
-    setTimeout(() => {
-      window.location.href = "https://chat.whatsapp.com/Jm6VJEWgk1N5a1Hrsch2lv?mode=ems_copy_t";
-    }, 1000); // Espera 1 segundo antes de redirigir
-  }}
 >
   <div className="grid md:grid-cols-2 gap-4">
     <div>
@@ -975,9 +980,6 @@ const Index = () => {
     <Download className="w-5 h-5 mr-2" />
     Descargar Muestra Gratis
   </Button>
-  <p className="text-sm text-muted-foreground">
-    No spam. Recibirás contenido de valor y la opción de acceder al eBook completo.
-  </p>
 </form>
             </div>
           </div>
