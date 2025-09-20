@@ -174,9 +174,7 @@ const Index = () => {
                   size="lg"
                   variant="outline"
                   className="btn-ghost-neon text-lg px-8 py-6"
-                  onClick={() => {
-                    document.getElementById('demo-video')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
+                  onClick={scrollToCompra}
                 >
                   <Play className="w-5 h-5 mr-2" />
                   Ver Demo 60s
@@ -604,9 +602,12 @@ const Index = () => {
                 </div>
               </div>
               
-              <Button size="lg" className="btn-neon">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Unirme al Grupo WhatsApp
+              {/* Comunidad - Botón WhatsApp */}
+              <Button size="lg" className="btn-neon" asChild>
+                <a href="https://chat.whatsapp.com/Jm6VJEWgk1N5a1Hrsch2lv?mode=ems_copy_t" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Unirme al Grupo WhatsApp
+                </a>
               </Button>
             </div>
           </div>
@@ -1014,7 +1015,7 @@ const Index = () => {
                 </p>
               </div>
               
-              <Button size="lg" className="btn-neon text-xl px-12 py-6 animate-glow">
+              <Button size="lg" className="btn-neon text-xl px-12 py-6 animate-glow" onClick={scrollToCompra}>
                 <Rocket className="w-6 h-6 mr-3" />
                 Sí, Quiero Dominar las Landing Pages - $9
               </Button>
@@ -1124,9 +1125,11 @@ const ThankYouPage = () => {
             </div>
             
             <div className="space-y-4">
-              <Button size="lg" className="btn-neon w-full">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Unirme al Grupo de WhatsApp
+              <Button size="lg" className="btn-neon w-full" asChild>
+                <a href="https://chat.whatsapp.com/Jm6VJEWgk1N5a1Hrsch2lv?mode=ems_copy_t" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Unirme al Grupo de WhatsApp
+                </a>
               </Button>
               
               <div className="glass-card p-6">
