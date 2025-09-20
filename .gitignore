@@ -12,6 +12,19 @@ dist
 dist-ssr
 *.local
 
+# Ignorar videos y archivos grandes
+*.mp4
+*.mov
+*.avi
+*.zip
+
+# Ignorar carpeta de build
+dist/
+build/
+
+# Ignorar dependencias
+node_modules/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
