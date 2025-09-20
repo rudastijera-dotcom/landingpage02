@@ -12,8 +12,6 @@ import whatsapp01 from "@/assets/whatsapp-01.png";
 import whatsapp02 from "@/assets/whatsapp-02.png";
 import whatsapp03 from "@/assets/whatsapp-03.png";
 import whatsapp04 from "@/assets/whatsapp-04.png";
-import video from "@/assets/0919.mp4";
-import vslVideo from "@/assets/vsl.mp4";
 
 const Index = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -199,19 +197,20 @@ const Index = () => {
 
             {/* Right: VSL & Visual */}
             <div className="space-y-6">
+              {/* Hero Section with VSL (el video corto primero) */}
               <div className="glass-card p-1 animate-float">
-                <video
-                  className="w-full h-full object-cover"
-                  controls
-                  preload="metadata"
-                  poster="/demo-thumbnail.jpg"
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source src={video} type="video/mp4" />
-                  Tu navegador no soporta la reproducción de video.
-                </video>
+                <div className="relative aspect-video w-full h-full rounded-lg overflow-hidden">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/AFHPMIu86xU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1"
+                    title="Demo Corto"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className="w-full h-full object-cover border-0 rounded-lg"
+                    style={{ minHeight: 240 }}
+                  />
+                </div>
               </div>
               
               <div className="glass-card p-6 text-center">
@@ -454,21 +453,20 @@ const Index = () => {
               </div>
             </div>
 
+            {/* Mini Demo (el video largo abajo) */}
             <div id="demo-video" className="glass-card p-8">
               <h3 className="text-xl font-bold mb-4 text-primary">Demo en Vivo (60 segundos)</h3>
               <div className="relative aspect-video bg-card rounded-lg overflow-hidden border border-primary/30">
-                <video 
-                  className="w-full h-full object-cover"
-                  controls
-                  preload="metadata"
-                  poster="/demo-thumbnail.jpg"
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source src={vslVideo} type="video/mp4" />
-                  Tu navegador no soporta la reproducción de video.
-                </video>
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/KPAItDYGty8?autoplay=1&mute=1&controls=1&rel=0&showinfo=0&modestbranding=1"
+                  title="VSL Demo"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  className="w-full h-full object-cover border-0 rounded-lg"
+                  style={{ minHeight: 240 }}
+                />
               </div>
             </div>
           </div>
@@ -853,7 +851,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Bloque de Compra */}
+      {/* Botón de Compra */}
       <section id="compra" className="py-20 section-tech">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center scroll-reveal">
@@ -904,9 +902,12 @@ const Index = () => {
                 </div>
               </div>
               
-              <Button size="lg" className="btn-neon text-xl px-12 py-6 w-full mb-6">
-                <Download className="w-6 h-6 mr-3" />
-                Obtener Acceso Inmediato - $9 USD
+              {/* Botón de compra con link externo */}
+              <Button size="lg" className="btn-neon text-xl px-12 py-6 w-full mb-6" asChild>
+                <a href="https://pay.hotmart.com/B101983985V?checkoutMode=10" target="_blank" rel="noopener noreferrer">
+                  <Download className="w-6 h-6 mr-3" />
+                  Obtener Acceso Inmediato - $9 USD
+                </a>
               </Button>
               
               <p className="text-sm text-muted-foreground">
@@ -1072,7 +1073,7 @@ const Index = () => {
           </div>
           
           <div className="border-t border-border/50 pt-8 mt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 Landing que Vende 24/7. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Landing que Vende 24/7. Todos los derechos reservados. Saulo Torres</p>
           </div>
         </div>
       </footer>
