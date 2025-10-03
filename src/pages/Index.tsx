@@ -99,6 +99,14 @@ const Index = () => {
         description: "Tu eBook está siendo procesado..."
       });
     }, 500);
+
+    // Ejemplo de uso en el submit del formulario
+    crearLeadOdoo({
+      nombre: formData.name,
+      email: formData.email,
+      telefono: formData.whatsapp,
+      mensaje: "Lead Magnet - Primer capítulo solicitado"
+    });
   };
   const copyUTM = (campaign: string) => {
     const utm = `https://tusitio.com/landing24x7?utm_source=landing&utm_medium=web&utm_campaign=${campaign}`;
@@ -673,15 +681,7 @@ const Index = () => {
             
             <div className="space-y-8">
               <div className="glass-card p-8">
-                <h3 className="text-xl font-bold mb-4 text-muted-foreground">El Pasado (2022)</h3>
-                <p className="text-lg">
-                  Como muchos emprendedores, tenía un buen producto pero cero ventas online. 
-                  Gastaba en Facebook Ads pero la gente llegaba a mi página y... nada. 
-                  Bouncing del 85%. Conversión del 0.5%. Un desastre total.
-                </p>
-              </div>
-              
-              <div className="glass-card p-8">
+                
                 <h3 className="text-xl font-bold mb-4 text-destructive">La Caída (Marzo 2023)</h3>
                 <p className="text-lg">
                   Después de gastar $3,000 USD en diseñadores y $5,000 en ads sin resultados, 
@@ -952,37 +952,55 @@ const Index = () => {
             <h2 className="text-3xl lg:text-4xl font-bold mb-8">
               ¿Prefieres probarlo <span className="text-neon">gratis</span> primero? 🎯
             </h2>
-            
             <div className="glass-card p-8">
               <p className="text-lg mb-8">
                 Descarga los primeros 3 capítulos gratis + 10 prompts maestro. 
                 Si te gusta, accedes al eBook completo con descuento exclusivo.
               </p>
-              
               <form
-  action="/send.php"
-  method="POST"
-  className="space-y-4"
->
-  <div className="grid md:grid-cols-2 gap-4">
-    <div>
-      <Label htmlFor="name" className="sr-only">Nombre</Label>
-      <Input id="name" name="name" placeholder="Tu nombre completo" required />
-    </div>
-    <div>
-      <Label htmlFor="email" className="sr-only">Email</Label>
-      <Input id="email" name="email" type="email" placeholder="tu@email.com" required />
-    </div>
-  </div>
-  <div>
-    <Label htmlFor="whatsapp" className="sr-only">WhatsApp (opcional)</Label>
-    <Input id="whatsapp" name="whatsapp" placeholder="WhatsApp (opcional para grupo VIP)" />
-  </div>
-  <Button type="submit" size="lg" className="btn-neon w-full">
-    <Download className="w-5 h-5 mr-2" />
-    Descargar Muestra Gratis
-  </Button>
-</form>
+                onSubmit={handleSubmit}
+                className="space-y-4"
+              >
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name" className="sr-only">Nombre</Label>
+                    <Input 
+                      id="name" 
+                      name="name" 
+                      placeholder="Tu nombre completo" 
+                      required 
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email" className="sr-only">Email</Label>
+                    <Input 
+                      id="email" 
+                      name="email" 
+                      type="email" 
+                      placeholder="tu@email.com" 
+                      required 
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="whatsapp" className="sr-only">WhatsApp (opcional)</Label>
+                  <Input 
+                    id="whatsapp" 
+                    name="whatsapp" 
+                    placeholder="WhatsApp (opcional para grupo VIP)" 
+                    value={formData.whatsapp}
+                    onChange={e => setFormData({ ...formData, whatsapp: e.target.value })}
+                  />
+                </div>
+                <Button type="submit" size="lg" className="btn-neon w-full">
+                  <Download className="w-5 h-5 mr-2" />
+                  Descargar Muestra Gratis
+                </Button>
+              </form>
             </div>
           </div>
         </div>
@@ -1154,4 +1172,88 @@ const ThankYouPage = () => {
       </div>
     </div>;
 };
+
+// Función para crear lead en Odoo
+async function crearLeadOdoo({ nombre, email, telefono, mensaje }) {
+  const url = "https://saulo-torres-marketing-and-bussines.odoo.com/jsonrpc";
+  const db = "AQUÍ VA EL NOMBRE DE LA BASE DE DATOS"; // Reemplaza aquí
+  const usuario = "rudastijera@gmail.com";
+  const apiKey = "7ca63ebb775d4d69c2c5d125d209abd288313cde";
+
+  // 1. Autenticación
+  const authPayload = {
+    jsonrpc: "2.0",
+    method: "call",
+    params: {
+      db,
+      login: usuario,
+      password: apiKey
+    },
+    id: 1
+  };
+
+  let uid;
+  try {
+    const authRes = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...authPayload,
+        method: "call",
+        params: {
+          service: "common",
+          method: "login",
+          args: [db, usuario, apiKey]
+        }
+      })
+    });
+    const authData = await authRes.json();
+    uid = authData.result;
+    if (!uid) throw new Error("No se pudo autenticar en Odoo");
+  } catch (err) {
+    alert("Error de autenticación Odoo: " + err.message);
+    return;
+  }
+
+  // 2. Crear el lead
+  const leadPayload = {
+    jsonrpc: "2.0",
+    method: "call",
+    params: {
+      service: "object",
+      method: "execute_kw",
+      args: [
+        db,
+        uid,
+        apiKey,
+        "crm.lead",
+        "create",
+        [{
+          name: `Lead desde Landing: ${nombre}`,
+          contact_name: nombre,
+          email_from: email,
+          phone: telefono,
+          description: mensaje
+        }]
+      ]
+    },
+    id: 2
+  };
+
+  try {
+    const leadRes = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(leadPayload)
+    });
+    const leadData = await leadRes.json();
+    if (leadData.result) {
+      alert("¡Lead creado exitosamente en Odoo!");
+    } else {
+      throw new Error("No se pudo crear el lead");
+    }
+  } catch (err) {
+    alert("Error al crear el lead en Odoo: " + err.message);
+  }
+}
 export default Index;
